@@ -1,0 +1,38 @@
+# PhishGuard v0.2 — copy/paste update
+
+This update was created against the exact `phishguard-starter.zip` source (v0.1).
+
+## Safe update on your Windows machine
+
+1. Stop the Vite server (`Ctrl+C`).
+2. Back up `C:\phishguard-starter\src`.
+3. From this ZIP, **copy the following into** `C:\phishguard-starter\src\` (overwrite when asked):
+   - `analysis.ts` (modified)
+   - `main.tsx` (modified)
+   - `firebase.ts` (modified; keeps your original initialization contract)
+   - `style.css` (modified)
+   - `urlAnalyzer.ts` (new)
+   - `report.ts` (new)
+4. **IMPORTANT**: If you made custom edits to `src/firebase.ts` during App Check troubleshooting, KEEP YOUR WORKING FILE instead of overwriting it. Copy only the AI prompt update from the ZIP's firebase.ts into your working `explainThreat()` function. Your working App Check configuration may differ from the original starter.
+5. Keep your existing `.env.local` unchanged. Do not copy a debug token into public code.
+6. Existing React, Firebase, and Lucide dependencies are sufficient; **no new dependency installation required**.
+7. Run `npm run build` then `npm run dev`.
+
+## New features
+- Offline-only URL parsing and structural warning signals (never follows links).
+- Text highlights using React text nodes (no `dangerouslySetInnerHTML`).
+- Structured AI answer prompt, compatible with existing local/cloud Firebase AI Logic calls.
+- Downloadable `.txt` report containing the message and assessment (be careful with sensitive contents).
+- Evidence paths in findings and separate URL intelligence section.
+
+## Test
+Paste: `URGENT: Verify your account immediately at https://paypal.com.attacker.example/login and enter your password.`
+Expected: urgency/credential/account warnings, URL warning for a .com embedded inside a longer host, highlighted evidence, export button.
+Paste: `Read https://example.com for background.`
+Expected: link detection alone, no claim that the link is malicious or verified safe.
+
+## Privacy
+- Rule-based scanning, URL inspection, highlighting, and report generation run in the browser.
+- AI behavior still follows your explicit selection: `ONLY_ON_DEVICE` or `ONLY_IN_CLOUD`.
+- Exports are created locally and can include the entire message. Avoid sharing exports containing private content.
+- The URL analyzer is heuristic, NOT a reputation scanner, malware scanner, DNS checker, or sender authentication verifier.
